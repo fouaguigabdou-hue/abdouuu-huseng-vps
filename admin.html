@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>لوحة الإدارة — ABDOUUU</title><link rel="stylesheet" href="/static/style.css"></head>
+<body class="dashboard-page">
+<header class="topbar darkbar"><div class="brand"><span class="brand-mark">✦</span><b>ABDOUUU HUSENG VPS</b><span class="verified">✓</span></div><b>Admin⌄</b></header>
+<div class="dash-layout">
+<aside class="sidebar"><a class="selected">⌂　الرئيسية</a><a>⚙　إنشاء كود</a><a>⚯　إدارة الأكواد</a><a>♙　المستخدمين</a><a>▣　الخوادم</a><a>⚙　الإعدادات</a><a href="/">↪　الخروج</a></aside>
+<main class="dash-main">
+<h1>لوحة الإدارة</h1>
+<div class="metric-row admin-metrics"><div><span>السيرفرات</span><b>3</b></div><div><span>إجمالي المستخدمين</span><b>{{ codes|length }}</b></div><div><span>المستخدمين النشطين</span><b>{{ codes|selectattr('active')|list|length }}</b></div><div><span>إجمالي الأكواد</span><b>{{ codes|length }}</b></div></div>
+<div class="admin-columns">
+<section class="white-card creator-card"><h3>إنشاء كود جديد</h3><label>مدة الكود (بالأيام)</label><input id="days" type="number" min="1" value="7"><label>عدد المستخدمين</label><input id="users" type="number" min="1" value="5"><button class="black-btn" onclick="createCode()">إنشاء الكود</button><div id="new" class="generated"></div></section>
+<section class="white-card"><h3>الأكواد الحالية</h3><div class="code-table"><div class="code-row head"><span>الكود</span><span>التشغيل</span><span>الصلاحية</span><span>المستخدمين</span><span>الحالة</span><span>إجراء</span></div>
+{% for c in codes %}<div class="code-row"><span class="mono">{{c.code}}</span><span>{{c.created_at[:10]}}</span><span>{{c.expires_at[:10]}}</span><span>{{c.used_users}}/{{c.max_users}}</span><span class="{{'green' if c.active else 'red'}}">{{"نشط" if c.active else "معطل"}}</span><span><button onclick="toggleCode({{c.id}})">◐</button><button onclick="deleteCode({{c.id}})">⌫</button></span></div>{% endfor %}
+</div></section></div>
+</main></div>
+<script>
+async function createCode(){const r=await fetch(location.pathname+"/create",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({days:document.getElementById("days").value,users:document.getElementById("users").value})});const j=await r.json();const n=document.getElementById("new");n.textContent=j.ok?"الكود الجديد: "+j.code:"خطأ: "+j.message;if(j.ok)setTimeout(()=>location.reload(),1200)}
+async function toggleCode(id){await fetch(location.pathname+"/toggle",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id}));location.reload()}
+async function deleteCode(id){if(confirm("حذف الكود؟")){await fetch(location.pathname+"/delete",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id}));location.reload()}}
+</script></body></html>

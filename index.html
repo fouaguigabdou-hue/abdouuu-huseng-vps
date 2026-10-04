@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ABDOUUU HUSENG VPS</title><link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">✦</span><b>ABDOUUU HUSENG VPS</b><span class="verified">✓</span></div>
+  <nav><a class="active" href="/">الرئيسية</a><a href="#services">الخدمات</a><a href="#prices">الأسعار</a><a href="#contact">تواصل معنا</a></nav>
+  <a class="login-btn" href="#access">تسجيل الدخول</a>
+  <button class="menu-btn">☰</button>
+</header>
+
+<main>
+<section class="hero-wrap">
+  <div class="hero-copy">
+    <div class="online-pill"><span></span> ONLINE • VPS & HOSTING</div>
+    <h1>استضافتك تبدأ<br><strong>من هنا.</strong></h1>
+    <p>استضافة قوية • آمنة • سريعة .. لأجل مشاريعك وخدماتك.</p>
+    <div class="hero-actions"><a class="primary-btn" href="#access">ابدأ الآن <span>←</span></a></div>
+  </div>
+  <div class="server-art">
+    <div class="server-glow"></div>
+    <div class="server-stack">
+      <div class="server-unit">▰</div><div class="server-unit">▰</div><div class="server-unit">▰</div>
+      <div class="server-unit">▰</div><div class="server-unit">▰</div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-strip">
+  <div><b>+10K</b><span>مستخدم نشط</span></div>
+  <div><b>99.9%</b><span>وقت التشغيل</span></div>
+  <div><b>24/7</b><span>دعم فني</span></div>
+  <div><b>أمان عالي</b><span>حماية كاملة</span></div>
+</section>
+
+<section id="services" class="section">
+  <div class="section-kicker">SERVICES</div><h2>خدماتنا</h2>
+  <p class="section-sub">نقدم لك أفضل حلول الاستضافة بجودة عالية وبأقل الأسعار</p>
+  <div class="service-grid">
+    <article class="service-card"><div class="icon">▣</div><h3>VPS</h3><p>سيرفرات VPS قوية ومستقرة.</p><a href="#access">اطلب الآن</a></article>
+    <article class="service-card"><div class="icon">⌘</div><h3>استضافة Python</h3><p>لدعم مشاريعك البرمجية وتشغيل Flask وPython.</p><a href="#access">اطلب الآن</a></article>
+    <article class="service-card"><div class="icon">◉</div><h3>استضافة بوتات</h3><p>لبوتات تيليجرام وديسكورد بسهولة.</p><a href="#access">اطلب الآن</a></article>
+    <article class="service-card"><div class="icon">▧</div><h3>استضافة مواقع</h3><p>لمواقعك ومشاريعك الإلكترونية.</p><a href="#access">اطلب الآن</a></article>
+  </div>
+</section>
+
+<section id="access" class="access-section">
+  <div class="access-card">
+    <div class="access-kicker">ACCESS CODE</div>
+    <h2>تفعيل الكود</h2>
+    <p>أدخل كود التفعيل الخاص بك للبدء في استخدام الخدمة.</p>
+    <form id="form">
+      <input id="code" autocomplete="off" placeholder="أدخل كود التفعيل" required>
+      <button class="primary-btn wide">تفعيل الكود <span>←</span></button>
+      <div class="example">مثال على الكود:<b>ABDOUUU-HUSENG-VPS-XXXX-XXXXX-XXXXX</b></div>
+      <div class="access-features"><span>⚡ تفعيل فوري</span><span>◉ أمان عالي</span><span>◷ دعم 24/7</span></div>
+      <div id="msg"></div>
+    </form>
+  </div>
+</section>
+
+<section id="prices" class="section compact">
+  <div class="section-kicker">WHY US</div><h2>لماذا ABDOUUU؟</h2>
+  <div class="why-grid"><div>⚡<b>سرعة عالية</b><span>أداء مستقر وسريع</span></div><div>🛡<b>حماية</b><span>بنية آمنة لمشاريعك</span></div><div>24/7<b>دعم مستمر</b><span>نحن معك دائماً</span></div></div>
+</section>
+</main>
+<footer id="contact">© 2026 ABDOUUU HUSENG VPS — جميع الحقوق محفوظة</footer>
+
+<script>
+const form=document.getElementById("form"), code=document.getElementById("code"), msg=document.getElementById("msg");
+form.addEventListener("submit",async e=>{
+ e.preventDefault(); msg.textContent="جاري التحقق...";
+ try{
+  const r=await fetch("/api/verify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code:code.value})});
+  const j=await r.json(); msg.textContent=j.message;
+  if(j.ok) location="/dashboard";
+ }catch{msg.textContent="تعذر الاتصال بالخادم";}
+});
+</script>
+</body></html>
