@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: abdouuu-huseng-vps
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: waitress-serve --host=0.0.0.0 --port=$PORT app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_PATH
+        value: abdouuu-admin-CHANGE-ME
